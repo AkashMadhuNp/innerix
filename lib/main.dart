@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:innerix/presentation/bloc/login/bloc/login_bloc.dart';
 import 'package:innerix/presentation/bloc/otp/bloc/otp_bloc.dart';
-import 'package:innerix/presentation/screens/dashboard/main_screen.dart';
 import 'package:innerix/presentation/screens/onboarding/onboarding_screen.dart';
 
 void main(){

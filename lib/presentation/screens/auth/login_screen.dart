@@ -204,7 +204,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       SizedBox(height: 24),
 
-                      // Divider Section
                       Row(
                         children: [
                           Expanded(child: Divider(color: Colors.grey[300])),
