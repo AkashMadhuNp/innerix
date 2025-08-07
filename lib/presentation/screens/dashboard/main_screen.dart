@@ -16,7 +16,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  // List of screens for each tab
   final List<Widget> _screens = [
     const HomeScreen(),
     const CategoriesScreen(),
@@ -30,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(
+        height: 100, 
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -48,36 +48,73 @@ class _MainScreenState extends State<MainScreen> {
           },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          selectedItemColor: Colors.yellow, // Use your primary color
+          selectedItemColor: Colors.yellow,
           unselectedItemColor: AppColors.grey,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          iconSize: 24,
+          selectedFontSize: 14, 
+          unselectedFontSize: 14, 
+          selectedLabelStyle: const TextStyle(
+            color: Colors.yellow,
+            fontWeight: FontWeight.w600,
+          ),
+          unselectedLabelStyle: TextStyle(
+            color: AppColors.grey,
+            fontWeight: FontWeight.w400,
+            fontSize: 12
+          ),
+          iconSize: 32, 
           elevation: 0,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 4), 
+                child: Image.asset(
+                  'assets/home.png',
+                ),
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_outlined),
-              activeIcon: Icon(Icons.grid_view),
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Image.asset(
+                  'assets/cards.png',
+                  width: 32,
+                  height: 32,
+                ),
+              ),
               label: 'Categories',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_offer_outlined),
-              activeIcon: Icon(Icons.local_offer),
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Image.asset(
+                  'assets/celebration.png', 
+                  width: 32,
+                  height: 32,
+                ),
+              ),
               label: 'Offers',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
-              activeIcon: Icon(Icons.shopping_cart),
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Image.asset(
+                  'assets/shopping.png', 
+                  width: 32,
+                  height: 32,
+                ),
+              ),
               label: 'Cart',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
+              icon: Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Image.asset(
+                  'assets/profile.png', 
+                  width: 32,
+                  height: 32,
+                ),
+              ),
               label: 'Profile',
             ),
           ],

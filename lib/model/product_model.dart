@@ -1,36 +1,63 @@
-class Product {
-  final int id;
+class Product{
+   final int productId;
   final String name;
-  final String? description;
+  final String? thumbnailImage;
+
   final double price;
-  final String? image;
-  final int? categoryId;
-  final String? category;
-  final double? discountPrice;
+  final double rating;
+  final int reviews;
 
   Product({
-    required this.id,
-    required this.name,
-    this.description,
+    required this.productId,
+    required this.name, 
+    required this.thumbnailImage,  
     required this.price,
-    this.image,
-    this.categoryId,
-    this.category,
-    this.discountPrice,
+    required this.rating,
+    required this.reviews,
+
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
+
+  factory Product.fromJson(Map<String,dynamic>json){
     return Product(
-      id: json['id'] ?? 0,
+      productId: json['product_id'] ?? 0,
+
       name: json['name'] ?? 'Unknown Product',
-      description: json['description'],
+      thumbnailImage: json['thumbnail_image'], 
       price: double.tryParse(json['price'].toString()) ?? 0.0,
-      image: json['image'],
-      categoryId: json['category_id'],
-      category: json['category'],
-      discountPrice: json['discount_price'] != null 
-          ? double.tryParse(json['discount_price'].toString()) 
-          : null,
+
+      rating: double.tryParse(json['rating'].toString()) ?? 0.0, 
+      reviews: json['product_id'] ?? 0
+      );
+  }
+
+}
+
+
+
+
+class HomeData {
+  final List<Product> topSellingItems;
+  final List<Product> bestOffers;
+
+  HomeData({
+    required this.topSellingItems,
+    required this.bestOffers,
+  });
+
+  factory HomeData.fromJson(Map<String, dynamic> json) {
+    return HomeData(
+      
+      topSellingItems: json['top_selling_items'] != null && json['top_selling_items']['items'] != null
+          ? (json['top_selling_items']['items'] as List)
+              .map((item) => Product.fromJson(item))
+              .toList()
+          : [],
+      bestOffers: json['best_offers'] != null && json['best_offers']['items'] != null
+          ? (json['best_offers']['items'] as List)
+              .map((item) => Product.fromJson(item))
+              .toList()
+          : [],
     );
   }
 }

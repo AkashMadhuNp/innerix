@@ -24,7 +24,6 @@ class ApiService {
       if (response.statusCode == 200) {
         return LoginResponse.fromJson(data);
       } else {
-        // Handle message or messages (which might be String or List)
       final error = data['messages'] ?? data['message'] ?? 'Login failed';
       String errorMessage;
 
@@ -104,69 +103,27 @@ class ApiService {
     }
   }
 
-  static Future<Map<String, dynamic>> getHomeData() async {
-    try {
+
+  static Future<HomeData>getHomeData()async{
+    try{
       final response = await http.get(
         Uri.parse('$baseUrl/v1/home'),
+        headers: {
+          'Content-Type':'application/json',
+          'Accept':'application/json',
+        }
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        return {
-          'success': true,
-          'data': data,
-        };
-      } else {
-        return {
-          'success': false,
-          'message': 'Failed to load home data',
-        };
+      if(response.statusCode == 200){
+        final Map<String,dynamic> data = json.decode(response.body);
+        return HomeData.fromJson(data);
+      }else{
+        throw Exception("Failed to load home data.Status code:${response.statusCode}");
       }
-    } catch (e) {
-      return {
-        'success': false,
-        'message': 'Network error: ${e.toString()}',
-      };
+    }catch(e){
+      throw Exception("Network error:${e.toString()}");
     }
   }
 
-  static Future<List<Product>> getProducts({
-    int shopId = 1,
-    int pageSize = 100,
-    int page = 1,
-  }) async {
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/products?shop_id=$shopId&page_size=$pageSize&page=$page'),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> productsJson = data['data'] ?? data['products'] ?? [];
-        
-        return productsJson.map((json) => Product.fromJson(json)).toList();
-      } else {
-        throw Exception('Failed to load products');
-      }
-    } catch (e) {
-      throw Exception('Network error: ${e.toString()}');
-    }
-  }
-
-  static Future<Product?> getProduct(int productId) async {
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/products/$productId'),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        return Product.fromJson(data['data'] ?? data);
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
-  }
+  
 }
